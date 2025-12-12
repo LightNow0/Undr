@@ -22,6 +22,14 @@
             min-height: 100vh;
             background: #ffffff;
             overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .map-box {
+            flex-grow: 1;
+            position: relative;
         }
 
         .map-box img {
@@ -30,12 +38,23 @@
             border-bottom: 2px solid #e5e5e5;
         }
 
+        .overlay-image {
+            position: absolute;
+            width: 10%;
+            /* 축소된 크기 */
+            height: auto;
+            /* 비율 유지 */
+            display: none;
+        }
+
         .header {
             text-align: center;
             margin-top: 16px;
-            position: relative;
-            /* 로고와 옵션 버튼 그룹 사이 간격 추가 */
             margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
         }
 
         .logo {
@@ -46,13 +65,13 @@
             letter-spacing: 0.5px;
         }
 
-        /* 설정 버튼 크기 통일 */
         .settings-btn {
             position: absolute;
-            right: 22px;
-            top: 20px;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
             background: #6ac8a2;
-            padding: 18px;
+            padding: 12px;
             border-radius: 22px;
             cursor: pointer;
             color: white;
@@ -61,19 +80,22 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 34px;
-            height: 34px;
-            box-sizing: content-box;
+            width: 40px;
+            height: 40px;
         }
 
-        /* 설정 아이콘 크기 통일 */
         .settings-btn i {
-            font-size: 30px;
-            line-height: 1;
+            font-size: 24px;
         }
 
         .settings-btn:hover {
             transform: scale(1.05);
+        }
+
+        .options,
+        .search-box,
+        .fixed-buttons {
+            margin-top: 12px;
         }
 
         .options {
@@ -81,11 +103,9 @@
             flex-wrap: wrap;
             justify-content: center;
             gap: 12px;
-            /* 상단 간격은 header에서 처리, 하단 간격은 search-box에서 처리 */
-            padding: 0 24px 16px;
+            padding: 0 16px 12px;
         }
 
-        /* 옵션 버튼 크기 통일 (높이 조정) */
         .option-btn {
             background: #d9f4e7;
             padding: 18px 16px;
@@ -102,23 +122,26 @@
             background: #c9eddc;
         }
 
+        .option-btn:active {
+            background: #84E0AE;
+        }
+
         .search-box {
             display: flex;
             justify-content: center;
             align-items: center;
             gap: 12px;
-            /* 상단/하단 패딩 조정 */
-            padding: 8px 20px;
+            padding: 8px 16px;
             margin-top: 0;
         }
 
-        /* 검색 입력창 크기 통일 (높이/폰트 크기 조정) */
         .search-box input {
-            width: 230px;
-            padding: 20px 100px;
+            width: 100%;
+            max-width: 230px;
+            padding: 12px 16px;
             border-radius: 50px;
             border: 1.5px solid #b5b5b5;
-            font-size: 30px;
+            font-size: 16px;
             transition: 0.2s;
             text-align: center;
             box-sizing: border-box;
@@ -130,18 +153,11 @@
             box-shadow: 0 0 0 2px rgba(106, 200, 162, 0.25);
         }
 
-        .search-icon {
-            display: none;
-        }
-
-        /* ------------------------------------------- */
-        /* 하단 버튼 그룹 */
         .fixed-buttons {
             display: flex;
             justify-content: center;
             align-items: center;
-            /* 상단/하단 여백 조정 */
-            padding: 15px 20px 20px;
+            padding: 12px 16px;
             gap: 15px;
         }
 
@@ -158,8 +174,8 @@
             align-items: center;
             justify-content: center;
             flex-grow: 1;
-            padding: 18px 10px;
-            font-size: 20px;
+            padding: 12px 10px;
+            font-size: 16px;
         }
 
         .voice-btn:hover,
@@ -168,11 +184,66 @@
             background: #5dbb96;
         }
 
-
         .voice-btn i,
         .bottom-search-btn i {
-            font-size: 30px;
+            font-size: 20px;
             line-height: 1;
+        }
+
+        /* 반응형 스타일 */
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 28px;
+            }
+
+            .settings-btn {
+                width: 30px;
+                height: 30px;
+                padding: 12px;
+            }
+
+            .settings-btn i {
+                font-size: 24px;
+            }
+
+            .option-btn {
+                font-size: 14px;
+                padding: 12px 10px;
+            }
+
+            .search-box input {
+                font-size: 14px;
+                padding: 10px 12px;
+            }
+
+            .voice-btn,
+            .bottom-search-btn {
+                font-size: 14px;
+                padding: 10px 8px;
+            }
+
+            .voice-btn i,
+            .bottom-search-btn i {
+                font-size: 18px;
+            }
+
+            .options,
+            .search-box,
+            .fixed-buttons {
+                margin-top: 8px;
+            }
+
+            .options {
+                padding: 0 12px 8px;
+            }
+
+            .fixed-buttons {
+                padding: 8px 12px;
+            }
+
+            .search-box {
+                padding: 6px 12px;
+            }
         }
     </style>
 </head>
@@ -181,7 +252,7 @@
     <div class="container">
 
         <div class="map-box">
-            <img src="230 신림.png" />
+            <img src="230신림.jpg" alt="신림 지도 이미지" />
         </div>
 
         <div class="header">
@@ -216,11 +287,34 @@
         </div>
 
     </div>
-
     <script>
         function goHome() { alert('홈으로 이동'); }
         function goSettings() { alert('환경설정 이동'); }
-        function toggleIcon(type) { alert(type + ' 아이콘 표시'); }
+        function toggleIcon(type) {
+            const activeButton = document.querySelector(`.option-btn[onclick="toggleIcon('${type}')"]`);
+            if (activeButton.style.background === 'rgb(132, 224, 174)') { // #84E0AE
+                activeButton.style.background = '#d9f4e7'; // 원래 색상
+            } else {
+                const buttons = document.querySelectorAll('.option-btn');
+                buttons.forEach(btn => btn.style.background = '#d9f4e7'); // 기본 색상으로 초기화
+                activeButton.style.background = '#84E0AE'; // 클릭된 버튼 색상 변경
+            }
+
+            const overlayImages = document.querySelectorAll('.overlay-image');
+            if (type === 'elevator') {
+                overlayImages.forEach(img => {
+                    const randomX = Math.random() * 90; // 0% ~ 90% (지도 영역 내 랜덤 위치)
+                    const randomY = Math.random() * 90;
+                    img.style.left = `${randomX}%`;
+                    img.style.top = `${randomY}%`;
+                    img.style.display = 'block'; // 이미지 표시
+                });
+            } else {
+                overlayImages.forEach(img => img.style.display = 'none'); // 이미지 숨김
+            }
+
+            alert(type + ' 아이콘 표시');
+        }
         function searchStation() { alert('검색 기능 실행'); }
         function voiceControl() { alert('음성 조작 실행'); }
     </script>
