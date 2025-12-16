@@ -72,17 +72,27 @@
             right: 16px;
             top: 50%;
             transform: translateY(-50%);
+            width: 45px;
+            /* +5px */
+            height: 45px;
+            /* +5px */
+            border-radius: 8px;
+            /* 정사각형 + 부드러운 모서리 */
             background: #6ac8a2;
-            width: 40px;
-            height: 40px;
-            border-radius: 22px;
+            border: none;
             cursor: pointer;
-            color: white;
             display: flex;
             align-items: center;
             justify-content: center;
             box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
         }
+
+        /* 설정 아이콘 */
+        .icon-setting {
+            width: 22px;
+            height: 22px;
+        }
+
 
         /* ===== 옵션 버튼 ===== */
         .options {
@@ -100,7 +110,7 @@
             cursor: pointer;
             font-size: 15px;
             font-weight: 600;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 4px rgb(255, 255, 255);
         }
 
         /* ===== 검색 ===== */
@@ -232,10 +242,12 @@
                     icon.style.top = randomY + '%';
                     icon.style.display = 'block';
                 });
-            } else {
+            }
+            else {
                 icons.forEach(icon => {
                     icon.style.display = 'none';
                 });
+                buttons.forEach(btn => btn.style.background = '#d9f4e7');
             }
         }
     </script>
