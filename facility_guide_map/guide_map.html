@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Undr Prototype</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
     <style>
         body {
             margin: 0;
@@ -24,33 +25,35 @@
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
         }
 
+        /* ===== 지도 영역 ===== */
         .map-box {
-            flex-grow: 1;
             position: relative;
+            flex-grow: 1;
         }
 
-        .map-box img {
+        .map-box img.map-image {
             width: 100%;
             display: block;
             border-bottom: 2px solid #e5e5e5;
         }
 
+        /* ===== 지도 위 아이콘 (EV1.png) ===== */
         .overlay-image {
             position: absolute;
-            width: 10%;
-            /* 축소된 크기 */
-            height: auto;
-            /* 비율 유지 */
+            width: 60px;
+            /* 모바일에서 보기 좋은 아이콘 크기 */
+            height: 60px;
             display: none;
+            z-index: 20;
+            pointer-events: none;
         }
 
+        /* ===== 헤더 ===== */
         .header {
             text-align: center;
-            margin-top: 16px;
-            margin-bottom: 12px;
+            margin: 16px 0 12px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -62,7 +65,6 @@
             font-weight: 800;
             color: #6ac8a2;
             cursor: pointer;
-            letter-spacing: 0.5px;
         }
 
         .settings-btn {
@@ -71,33 +73,18 @@
             top: 50%;
             transform: translateY(-50%);
             background: #6ac8a2;
-            padding: 12px;
+            width: 40px;
+            height: 40px;
             border-radius: 22px;
             cursor: pointer;
             color: white;
-            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
-            transition: 0.2s;
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 40px;
-            height: 40px;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
         }
 
-        .settings-btn i {
-            font-size: 24px;
-        }
-
-        .settings-btn:hover {
-            transform: scale(1.05);
-        }
-
-        .options,
-        .search-box,
-        .fixed-buttons {
-            margin-top: 12px;
-        }
-
+        /* ===== 옵션 버튼 ===== */
         .options {
             display: flex;
             flex-wrap: wrap;
@@ -108,141 +95,61 @@
 
         .option-btn {
             background: #d9f4e7;
-            padding: 18px 16px;
+            padding: 14px 16px;
             border-radius: 24px;
             cursor: pointer;
-            font-size: 17px;
+            font-size: 15px;
             font-weight: 600;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            transition: 0.2s;
         }
 
-        .option-btn:hover {
-            transform: translateY(-3px);
-            background: #c9eddc;
-        }
-
-        .option-btn:active {
-            background: #84E0AE;
-        }
-
+        /* ===== 검색 ===== */
         .search-box {
             display: flex;
             justify-content: center;
-            align-items: center;
-            gap: 12px;
             padding: 8px 16px;
-            margin-top: 0;
         }
 
         .search-box input {
             width: 100%;
-            max-width: 230px;
+            max-width: 240px;
             padding: 12px 16px;
             border-radius: 50px;
             border: 1.5px solid #b5b5b5;
-            font-size: 16px;
-            transition: 0.2s;
+            font-size: 14px;
             text-align: center;
-            box-sizing: border-box;
         }
 
-        .search-box input:focus {
-            outline: none;
-            border-color: #6ac8a2;
-            box-shadow: 0 0 0 2px rgba(106, 200, 162, 0.25);
-        }
-
+        /* ===== 하단 버튼 ===== */
         .fixed-buttons {
             display: flex;
-            justify-content: center;
-            align-items: center;
+            gap: 12px;
             padding: 12px 16px;
-            gap: 15px;
         }
 
         .voice-btn,
         .bottom-search-btn {
+            flex: 1;
             background: #6ac8a2;
             border-radius: 22px;
-            cursor: pointer;
             color: white;
             font-weight: 700;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            transition: 0.2s;
+            padding: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            flex-grow: 1;
-            padding: 12px 10px;
-            font-size: 16px;
+            cursor: pointer;
         }
 
-        .voice-btn:hover,
-        .bottom-search-btn:hover {
-            transform: translateY(-3px);
-            background: #5dbb96;
-        }
-
-        .voice-btn i,
-        .bottom-search-btn i {
-            font-size: 20px;
-            line-height: 1;
-        }
-
-        /* 반응형 스타일 */
+        /* ===== 모바일 대응 ===== */
         @media (max-width: 480px) {
             .logo {
                 font-size: 28px;
             }
 
-            .settings-btn {
-                width: 30px;
-                height: 30px;
-                padding: 12px;
-            }
-
-            .settings-btn i {
-                font-size: 24px;
-            }
-
-            .option-btn {
-                font-size: 14px;
-                padding: 12px 10px;
-            }
-
-            .search-box input {
-                font-size: 14px;
-                padding: 10px 12px;
-            }
-
-            .voice-btn,
-            .bottom-search-btn {
-                font-size: 14px;
-                padding: 10px 8px;
-            }
-
-            .voice-btn i,
-            .bottom-search-btn i {
-                font-size: 18px;
-            }
-
-            .options,
-            .search-box,
-            .fixed-buttons {
-                margin-top: 8px;
-            }
-
-            .options {
-                padding: 0 12px 8px;
-            }
-
-            .fixed-buttons {
-                padding: 8px 12px;
-            }
-
-            .search-box {
-                padding: 6px 12px;
+            .overlay-image {
+                width: 24px;
+                height: 24px;
             }
         }
     </style>
@@ -251,18 +158,23 @@
 <body>
     <div class="container">
 
+        <!-- 지도 -->
         <div class="map-box">
-            <img src="230신림.jpg" alt="신림 지도 이미지" />
+            <img src="230신림.jpg" class="map-image" alt="신림 지도 이미지">
+            <img src="EV1.png" class="overlay-image elevator" alt="엘리베이터 아이콘">
+            <img src="EV1.png" class="overlay-image elevator" alt="엘리베이터 아이콘">
+            <img src="EV1.png" class="overlay-image elevator" alt="엘리베이터 아이콘">
         </div>
 
+        <!-- 헤더 -->
         <div class="header">
             <div class="logo" onclick="goHome()">Undr</div>
-
             <div class="settings-btn" onclick="goSettings()">
                 <i class="fas fa-cog"></i>
             </div>
         </div>
 
+        <!-- 옵션 -->
         <div class="options">
             <div class="option-btn" onclick="toggleIcon('bathroom')">화장실</div>
             <div class="option-btn" onclick="toggleIcon('baby')">수유실</div>
@@ -272,51 +184,60 @@
             <div class="option-btn" onclick="toggleIcon('aed')">자동심장충격기</div>
         </div>
 
+        <!-- 검색 -->
         <div class="search-box">
-            <input type="text" placeholder="역을 검색하세요" />
+            <input type="text" placeholder="역을 검색하세요">
         </div>
 
+        <!-- 하단 버튼 -->
         <div class="fixed-buttons">
-            <div class="voice-btn" onclick="voiceControl()">
+            <div class="voice-btn">
                 <i class="fas fa-microphone"></i>
             </div>
-
-            <div class="bottom-search-btn" onclick="searchStation()">
+            <div class="bottom-search-btn">
                 <i class="fas fa-search"></i>
             </div>
         </div>
 
     </div>
-    <script>
-        function goHome() { alert('홈으로 이동'); }
-        function goSettings() { alert('환경설정 이동'); }
-        function toggleIcon(type) {
-            const activeButton = document.querySelector(`.option-btn[onclick="toggleIcon('${type}')"]`);
-            if (activeButton.style.background === 'rgb(132, 224, 174)') { // #84E0AE
-                activeButton.style.background = '#d9f4e7'; // 원래 색상
-            } else {
-                const buttons = document.querySelectorAll('.option-btn');
-                buttons.forEach(btn => btn.style.background = '#d9f4e7'); // 기본 색상으로 초기화
-                activeButton.style.background = '#84E0AE'; // 클릭된 버튼 색상 변경
-            }
 
-            const overlayImages = document.querySelectorAll('.overlay-image');
+    <script>
+        function goHome() {
+            alert('홈으로 이동');
+        }
+
+        function goSettings() {
+            alert('환경설정 이동');
+        }
+
+        function toggleIcon(type) {
+
+            const buttons = document.querySelectorAll('.option-btn');
+            buttons.forEach(btn => btn.style.background = '#d9f4e7');
+
+
+            const activeBtn = document.querySelector(
+                `.option-btn[onclick="toggleIcon('${type}')"]`
+            );
+            activeBtn.style.background = '#84E0AE';
+
+            const icons = document.querySelectorAll('.overlay-image');
+
             if (type === 'elevator') {
-                overlayImages.forEach(img => {
-                    const randomX = Math.random() * 90; // 0% ~ 90% (지도 영역 내 랜덤 위치)
-                    const randomY = Math.random() * 90;
-                    img.style.left = `${randomX}%`;
-                    img.style.top = `${randomY}%`;
-                    img.style.display = 'block'; // 이미지 표시
+                icons.forEach(icon => {
+                    const randomX = Math.random() * 45 + 15; // 잘리지 않게 여백
+                    const randomY = Math.random() * 40 + 15;
+
+                    icon.style.left = randomX + '%';
+                    icon.style.top = randomY + '%';
+                    icon.style.display = 'block';
                 });
             } else {
-                overlayImages.forEach(img => img.style.display = 'none'); // 이미지 숨김
+                icons.forEach(icon => {
+                    icon.style.display = 'none';
+                });
             }
-
-            alert(type + ' 아이콘 표시');
         }
-        function searchStation() { alert('검색 기능 실행'); }
-        function voiceControl() { alert('음성 조작 실행'); }
     </script>
 </body>
 
